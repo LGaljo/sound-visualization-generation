@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ public class FrequencyGraphFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
     private FrequencyGraph sketch;
+    boolean set = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,23 +29,19 @@ public class FrequencyGraphFragment extends Fragment {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        requireActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-
-        sketch = new FrequencyGraph(displayMetrics.heightPixels - 380, displayMetrics.widthPixels);
-        PFragment fragment = new PFragment(sketch);
-        FrameLayout frame = new FrameLayout(getContext());
-
-        frame.setId(binding.sketch.getId());
-        fragment.setView(frame, getActivity());
-
         root.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
-            Log.d("TAG", "height: " + root.getHeight());
-            Log.d("TAG", "width: " + root.getWidth());
+            if (!set) {
+                sketch = new FrequencyGraph(root.getHeight(), root.getWidth());
+                PFragment fragment = new PFragment(sketch);
+                FrameLayout frame = new FrameLayout(getContext());
 
-//            sketch.setWindowSize(root.getHeight(), root.getWidth());
+                frame.setId(binding.sketch.getId());
+                fragment.setView(frame, getActivity());
+            }
+            set = true;
         });
+
+        Toast.makeText(getContext(), "Tap to switch lin/log scale", Toast.LENGTH_SHORT).show();
 
         return root;
     }

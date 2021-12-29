@@ -16,7 +16,7 @@ import com.jsyn.ports.UnitInputPort;
  * @author Phil Burk (C) 2012 Mobileer Inc
  */
 public class PortFader extends LinearLayout {
-    private static final int RESOLUTION = 4096;
+    private static final int RESOLUTION = 5000;
     UnitInputPort port;
     SeekBar seekBar;
     TextView label;

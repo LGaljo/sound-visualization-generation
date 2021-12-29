@@ -13,14 +13,14 @@ import processing.core.PApplet;
 
 public class Spectrogram extends PApplet {
     private static final String TAG = Spectrogram.class.getSimpleName();
-    private final int heightPoints = 256;
+    private final int heightPoints = 128;
     private float[][] values;
 
     AudioRecord audioRecord = null;
     FFT fft;
 
     float[] buffer = null;
-    int bufferSize = 512;
+    int bufferSize = 1024;
     boolean logScaleFreq = false;
     int specSize;
 
@@ -87,7 +87,7 @@ public class Spectrogram extends PApplet {
             System.arraycopy(this.values[i - 1], 0, this.values[i], 0, this.specSize);
         }
 
-        float max = 0;
+        float max = 1;
         for (int wi = 0; wi < this.fft.specSize(); wi++) {
             float tmp = this.fft.getBand(wi);
             if (tmp > max) {
