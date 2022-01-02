@@ -42,7 +42,6 @@ public class Spectrogram extends PApplet {
     public void setup() {
         background(0);
         frameRate(120);
-        Log.d(TAG, "setup: " + this.height + " " + this.width);
 
         int buflen = AudioRecord.getMinBufferSize(44100, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_FLOAT);
         if (ActivityCompat.checkSelfPermission(getActivity(), "android.permission.RECORD_AUDIO") == 0) {
